@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.LoginDao">
+    <resultMap id="loginInfoMap" type="LoginInfo">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="password_level" property="passwordLevel" />
+        <result column="nickname" property="nickname" />
+        <result column="status" property="status" />
+        <result column="role_name" property="roleName" />
+    </resultMap>
+
+    <select id="queryByUsername" resultMap="loginInfoMap" parameterType="String">
+        SELECT t1.id, t1.username, t1.`password`, t1.password_level, t1.status,
+               t1.nickname, t2.name AS role_name
+        FROM admin AS t1
+        LEFT JOIN role AS t2 ON t1.role_id = t2.id
+        WHERE t1.is_delete = 0 and username = #{username}
+    </select>
+
+    <update id="updateLastLoginTimeById">
+        update admin set last_login_time = #{lastLoginTime} where id = #{id}
+    </update>
+
+</mapper>

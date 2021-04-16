@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="coupon-wrap">
+    <view class="coupon-title">可使用的优惠券</view>
+    <view class="coupons-list">
+      <view class="coupons-item" wx:for="{{ coupons }}" wx:key="id" wx:for-item="coupon">
+        <view class="coupons-item-info">
+          <view class="coupons-item-money">
+            <text class="money-symbol">￥</text>
+            <text class="money-value">{{ coupon.money }}</text>
+          </view>
+          <view class="coupons-item-desc">
+            <view class="coupons-item-desc-title">无门槛</view>
+            <view class="coupons-item-desc-expired-time">有效期至 {{ coupon.expiredTime }}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{ coupons.length === 0 }}" class="empty">
+      <image src="../../images/coupons.png" class="empty-icon"></image>
+      <view class="empty-text">暂无可用优惠券</view>
+    </view>
+  </view>
+</view>

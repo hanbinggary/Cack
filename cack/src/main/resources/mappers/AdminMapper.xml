@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.AdminDao">
+    <resultMap id="adminMap" type="com.ncst.cack.dto.AdminDTO">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password_level" property="passwordLevel" />
+        <result column="nickname" property="nickname" />
+        <result column="phone" property="phone" />
+        <result column="status" property="status" />
+        <result column="last_login_time" property="lastLoginTime" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="role_id" property="roleId" />
+        <result column="role_name" property="roleName" />
+    </resultMap>
+
+    <select id="listAdmin" resultMap="adminMap">
+        SELECT t1.id, t1.username, t1.password_level, t1.nickname, t1.phone,
+               t1.`status`, t1.last_login_time, t1.gmt_create, t1.gmt_modified,
+               t2.id as role_id, t2.name AS role_name
+        FROM admin AS t1
+        LEFT JOIN role AS t2 ON t1.role_id = t2.id
+        where t1.is_delete = 0
+    </select>
+
+    <select id="queryPasswordById" parameterType="Long" resultType="String">
+        SELECT password from admin where id = #{id}
+    </select>
+
+    <select id="one" resultMap="adminMap">
+        SELECT t1.id, t1.username, t1.password_level, t1.nickname, t1.phone,
+               t1.`status`, t1.last_login_time, t1.gmt_create, t1.gmt_modified,
+               t2.id as role_id, t2.name AS role_name
+        FROM admin AS t1
+        LEFT JOIN role AS t2 ON t1.role_id = t2.id
+        where t1.id = #{id} and t1.is_delete = 0 LIMIT 1
+    </select>
+
+    <select id="countAdminByUsername" parameterType="String" resultType="int">
+        SELECT COUNT(*) AS total
+        FROM admin WHERE username = #{username}
+    </select>
+
+    <insert id="insert" parameterType="Admin" useGeneratedKeys="true" keyProperty="id">
+        insert into admin
+        (username, password, password_level, nickname, phone, role_id)
+        values
+        (#{username}, #{password}, #{passwordLevel, javaType=int}, #{nickname}, #{phone},  #{roleId})
+    </insert>
+
+    <update id="update">
+        update admin
+        <set>
+            <if test="admin.nickname != null">nickname = #{admin.nickname},</if>
+            <if test="admin.phone != null">phone = #{admin.phone}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="resetPassword">
+        update admin set password = #{password}, password_level = 0
+        where id = #{id}
+    </update>
+
+    <update id="updateRoleIdById">
+        update admin set role_id = #{roleId} where id = #{id}
+    </update>
+
+    <update id="updateStatusById">
+        update admin set status = #{status}
+        where id = #{id}
+    </update>
+
+    <update id="updateLastLoginTimeById">
+        update admin set last_login_time = #{lastLoginTime}
+        where id = #{id}
+    </update>
+
+    <update id="updatePasswordById">
+        update admin set password = #{password}, password_level = #{passwordLevel}
+        where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="Long">
+        update admin set is_delete = 1 where id = #{id}
+    </update>
+</mapper>

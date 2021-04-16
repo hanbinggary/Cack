@@ -1,0 +1,109 @@
+.container {
+  padding: 16px 12px;
+}
+
+/* 添加按钮 */
+.add {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 0 1px rgb(25 25 25 / 8%);
+  background: #fff;
+}
+
+.add-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+}
+
+/* 已登记车辆详情 */
+
+.vehicle-detail {
+  margin-bottom: 16px;
+  border-radius: 4px;
+  box-shadow: 0 0 1px rgb(25 25 25 / 8%);
+  background: #fff;
+}
+
+.add:active,
+.vehicle-detail:active {
+  background: rgb(248, 248, 248);
+}
+
+.vehicle-license {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgb(245, 245, 245);
+}
+
+.vehicle-license-num {
+  padding: 4px 12px;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #2cf199;
+  background: #cafde6;
+}
+
+.vehicle-type {
+  font-size: 26rpx;
+}
+
+.vehicle-content {
+  padding: 16px 16px 6px;
+  font-size: 28rpx;
+}
+
+.vehicle-item {
+  display: flex;
+}
+
+.vehicle-item-label {
+  color: #767676;
+}
+
+
+.vehicle-item-desc {
+  margin-left: 12px;
+}
+
+.view-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 8px 0;
+  border-top: 1px solid rgb(245, 245, 245);
+}
+
+.view-details-text {
+  color: #1890ff;
+}
+
+.view-details-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* 空 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border-radius: 4px;
+  background: #eee;
+}
+
+.empty-icon {
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.empty-text {
+  color: #767676;
+}

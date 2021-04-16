@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wx.cack.dao.VehicleDao">
+    <resultMap id="vehicleMap" type="com.wx.cack.dto.VehicleDTO">
+        <id column="id" property="id" />
+        <result column="plate_no" property="plateNo" />
+        <result column="vehicle_type" property="vehicleType" />
+        <result column="use_character" property="useCharacter" />
+        <result column="vin" property="vin" />
+        <result column="engine_no" property="engineNo" />
+        <result column="odometer" property="odometer" />
+        <result column="register_date" property="registerDate" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <select id="canBookingListVehicle" parameterType="Long" resultMap="vehicleMap">
+        SELECT id, plate_no, vehicle_type, use_character, vin, engine_no, odometer, register_date,
+               gmt_create, gmt_modified
+        FROM vehicle WHERE user_id = #{userId} AND is_delete = 0
+                       AND id NOT IN (SELECT vehicle_id FROM booking WHERE is_delete = 0 AND `status` IN (1, 2))
+    </select>
+
+    <select id="listVehicle" parameterType="Long" resultMap="vehicleMap">
+        SELECT id, plate_no, vehicle_type, use_character, vin, engine_no, odometer, register_date,
+               gmt_create, gmt_modified
+        FROM vehicle WHERE user_id = #{userId} AND is_delete = 0
+        order by gmt_modified desc
+    </select>
+
+    <select id="one" parameterType="Long" resultMap="vehicleMap">
+        SELECT id, plate_no, vehicle_type, use_character, vin, engine_no, odometer, register_date,
+               gmt_create, gmt_modified
+        FROM vehicle WHERE id = #{id} AND is_delete = 0 LIMIT 1
+    </select>
+
+    <select id="countVehicleByUserId" parameterType="Long" resultType="int">
+        SELECT COUNT(*) AS total
+        FROM vehicle WHERE user_id = #{userId} AND is_delete = 0
+    </select>
+
+    <select id="countVehicleByPlateNo" resultType="int">
+        SELECT COUNT(*) AS total FROM vehicle WHERE user_id = #{userId} and plate_no = #{plateNo} LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="Vehicle" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into vehicle
+        (plate_no, vehicle_type, odometer, use_character, vin, engine_no, register_date, user_id)
+        values
+        (#{plateNo}, #{vehicleType, javaType=String}, #{odometer, javaType=int}, #{useCharacter, javaType=String}, #{vin}, #{engineNo},
+         #{registerDate}, #{userId})
+    </insert>
+
+    <update id="update" parameterType="Vehicle">
+        update vehicle
+        <set>
+            <if test="plateNo != null">plate_no = #{plateNo},</if>
+            <if test="vehicleType != null">vehicle_type = #{vehicleType},</if>
+            <if test="odometer != null">odometer = #{odometer},</if>
+            <if test="useCharacter != null">use_character = #{useCharacter},</if>
+            <if test="vin != null">vin = #{vin},</if>
+            <if test="engineNo != null">engine_no = #{engineNo},</if>
+            <if test="registerDate != null">register_date = #{registerDate}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="Long">
+        update vehicle set is_delete = 1 where id = #{id}
+    </update>
+</mapper>

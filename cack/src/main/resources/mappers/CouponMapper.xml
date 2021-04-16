@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.CouponDao">
+    <resultMap id="couponMap" type="com.ncst.cack.dto.CouponDTO">
+        <id column="id" property="id" />
+        <result column="money" property="money" />
+        <result column="is_expired" property="expired" />
+        <result column="status" property="status" />
+        <result column="expired_time" property="expiredTime" />
+        <result column="total" property="total" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <select id="listCoupon" resultMap="couponMap">
+        select t1.id, t1.money, t1.is_expired, t1.status, t1.expired_time, t1.gmt_create,
+               t1.gmt_modified, t2.total
+        from coupon AS t1
+        LEFT JOIN
+        (SELECT COUNT(*) as total, coupon_id FROM user_coupon GROUP BY coupon_id) AS t2
+        ON t1.id = t2.coupon_id
+        <where>
+            t1.is_delete = 0
+            <if test="expiredSign == 0">and t1.is_expired = false </if>
+            <if test="expiredSign == 1">and t1.is_expired = true </if>
+        </where>
+        <if test="orderByExpiredTime == 1">order by t1.expired_time asc </if>
+        <if test="orderByExpiredTime == 2">order by t1.expired_time desc </if>
+    </select>
+
+    <insert id="insert" parameterType="Coupon" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into coupon
+            (expired_time, money)
+            values
+            (#{expiredTime}, #{money})
+    </insert>
+
+    <update id="updateStatusById">
+        update coupon set status = #{status} where id = #{id}
+    </update>
+
+    <update id="delete" parameterType="Long">
+        update coupon set is_delete = 1 where id = #{id}
+    </update>
+
+    <update id="updateExpiredByNowTime">
+        update coupon set is_expired = 1
+        WHERE is_expired = 0 and expired_time <![CDATA[<]]> #{now}
+    </update>
+</mapper>

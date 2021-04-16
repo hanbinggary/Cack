@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="date-wrap">
+    <view class="date-title">选择要车检的日期？</view>
+    <view class="dates-list">
+      <view class="dates-item {{ item.selected ? 'selected' : '' }}" wx:for="{{ dates }}" wx:key="date"
+        data-date="{{ item.date }}" bindtap="onSelectedDate">
+        <text class="dates-item-date">{{ item.date}}</text>
+        <text
+          class="dates-item-degree-crowding {{ item.degreeOfCrowding === '推荐' ? 'recommend-color' : (item.degreeOfCrowding === '拥挤' ? 'crowding-color' : 'full-color') }}">{{ item.degreeOfCrowding}}</text>
+      </view>
+    </view>
+    <view class="empty-list" wx:if="{{ dates.length === 0 }}">暂无可预约的日期</view>
+    <!-- 按钮组 -->
+    <view class="btn-group">
+      <view class="btn cancal-btn" bindtap="onCancel">取消</view>
+      <view wx:if="{{ dates.length !== 0}}" class="btn next-btn" bindtap="onNext">下一步</view>
+    </view>
+  </view>
+</view>

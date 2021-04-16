@@ -1,0 +1,105 @@
+.order-container {
+  padding: 12px;
+}
+
+.order-item {
+  margin-top: 12px;
+  padding-bottom: 4px;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 28rpx;
+}
+
+.order-item:active {
+  background-color: rgb(250, 250, 250);
+}
+
+.order-item-header {
+  padding: 12px;
+  border-bottom: 1px solid rgb(245, 245, 245);
+}
+
+.order-item-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-item-no {
+  margin-left: 6px;
+}
+
+.order-item-no,
+.order-item-create-date,
+.order-item-status-cancel {
+  color: rgb(136, 136, 136);
+}
+
+.order-item-status-complete {
+  color: red;
+}
+
+.order-item-status-checking {
+  color: #1890ff;
+}
+
+.order-item-create-date {
+  font-size: 24rpx;
+}
+
+/* 车辆信息 */
+.vehicle-info {
+  padding: 16px;
+}
+
+.vehicle-info-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vehicle-info-plate-no {
+  padding: 4px 12px;
+  background: #cafde6;
+  border: 1px solid #2cf199;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.vehicle-info-text {
+  font-size: 24rpx;
+}
+
+.vehicle-info-desc {
+  margin-top: 16px;
+  font-size: 24rpx;
+  color: rgb(136, 136, 136);
+}
+
+/* 触底 */
+.van-divider.van-divider--center {
+  margin-top: 48px;
+}
+
+
+/* 空 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  border-radius: 4px;
+  background: #eee;
+}
+
+.empty-icon {
+  width: 72rpx;
+  height: 72rpx;
+  margin-bottom: 12px;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #767676;
+}

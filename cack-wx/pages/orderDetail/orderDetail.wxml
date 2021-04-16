@@ -1,0 +1,80 @@
+<view class="container">
+  <view
+    class="header {{ booking.status === 1 || booking.status === 2 ? 'header-ready-bg' : (booking.status === 3 ? 'header-complete-bg' : '') }} ">
+    <view class="header-status">{{ booking.statusText }}</view>
+    <view class=" cancel-reason">{{ booking.statusMsg }}</view>
+  </view>
+  <view class="vehicle-container">
+    <view class="vehicle-wrapper">
+      <!-- 车辆信息 -->
+      <view class="vehicle-thumb">
+        <view class="vehicle-info">
+          <view class="vehicle-info-plate-no">{{ booking.vehicle.plateNo }}</view>
+          <view class="vehicle-info-text">{{ booking.vehicle.vehicleType }}</view>
+        </view>
+        <view class="vehicle-booking-time">
+          预约时间 {{ booking.bookingTime.date }}
+          {{ booking.bookingTime.startTime }}:00 ~ {{ booking.bookingTime.endTime }}:00
+        </view>
+      </view>
+      <view class="vehicle-desc">
+        <view class="vehicle-desc-title">车辆信息</view>
+        <view class="desc-list">
+          <view class="desc-item">
+            <text class="desc-item-label">使用性质：</text>
+            <text>{{ booking.vehicle.useCharacter }}</text>
+          </view>
+          <view class="desc-item">
+            <text class="desc-item-label">总里程数：</text>
+            <text>{{ booking.vehicle.odometer }} km</text>
+          </view>
+          <view class="desc-item">
+            <text class="desc-item-label">车辆注册日期：</text>
+            <text>{{ booking.vehicle.registerDate }}</text>
+          </view>
+          <view class="desc-item">
+            <text class="desc-item-label">发动机代码：</text>
+            <text>{{ booking.vehicle.engineNo }}</text>
+          </view>
+          <view class="desc-item">
+            <text class="desc-item-label">车辆识别代码：</text>
+            <text>{{ booking.vehicle.vin }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 订单信息 -->
+    <view class="booking-desc">
+      <view class="desc-list">
+        <view class="desc-item">
+          <text class="desc-item-label">订单号：</text>
+          <text>{{ booking.orderNo }}</text>
+        </view>
+        <view class="desc-item">
+          <text class="desc-item-label">下单时间：</text>
+          <text>{{ booking.gmtCreate }}</text>
+        </view>
+        <view class="desc-item" wx:if="{{ booking.startCheckTime }}">
+          <text class="desc-item-label">开始车检时间：</text>
+          <text>{{ booking.startCheckTime }}</text>
+        </view>
+        <view class="desc-item" wx:if="{{ booking.endCheckTime}}">
+          <text class="desc-item-label">结束车检时间：</text>
+          <text>{{ booking.endCheckTime }}</text>
+        </view>
+        <view class="desc-item" wx:if="{{ booking.coupon}}">
+          <text class="desc-item-label">优惠：</text>
+          <text class="coupon-money">￥{{ booking.coupon.money }}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 按钮 -->
+    <view class="btn-group">
+      <view class="cancel-booking-btn" wx:if="{{ booking.status === 1 }}" bindtap="onCancelBooking">取消预约</view>
+      <!-- 弹出框 -->
+      <van-dialog id="van-dialog" />
+      <!--  提示框 -->
+      <van-toast id="van-toast" />
+    </view>
+  </view>
+</view>

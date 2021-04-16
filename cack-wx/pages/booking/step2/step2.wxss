@@ -1,0 +1,65 @@
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.date-wrap {
+  padding: 48rpx 32rpx;
+}
+
+.date-title {
+  margin-bottom: 16px;
+  font-size: 33rpx;
+  font-weight: bold;
+}
+
+/* 日期列表 */
+.dates-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 12px;
+  column-gap: 12px;
+  max-height: 68vh;
+  overflow: scroll;
+}
+
+.dates-item {
+  flex: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 4px;
+  background: #f5f4f4;
+  border: 1px solid transparent;
+}
+
+.dates-item-date {
+  margin-right: 4px;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+
+.dates-item-degree-crowding {
+  font-size: 20rpx;
+}
+
+.recommend-color {
+  color: #0d8aff;
+}
+
+.crowding-color {
+  color: rgb(255, 166, 0);
+}
+
+.full-color {
+  color: red;
+}
+
+.selected {
+  background-color: rgb(214, 255, 228);
+  border-color: rgb(94, 221, 157);
+}

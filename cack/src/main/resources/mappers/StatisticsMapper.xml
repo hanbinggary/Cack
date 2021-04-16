@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.StatisticsDao">
+    <select id="countBookings" resultType="Long">
+        SELECT COUNT(*) AS total from booking where is_delete = 0
+    </select>
+
+    <select id="countVehicles" resultType="Long">
+        SELECT COUNT(*) AS total from vehicle where is_delete = 0
+    </select>
+
+    <select id="countUsers" resultType="Long">
+        SELECT COUNT(*) AS total from user where is_delete = 0
+    </select>
+
+    <select id="countUserByCreateDate" resultType="com.ncst.cack.dto.StatisticsWeeklyDTO">
+        SELECT date_format(gmt_create, '%Y-%m-%d') AS date, COUNT(*) AS total
+        FROM user WHERE DATE_FORMAT(gmt_create,'%Y-%m-%d') = #{currentDate} AND is_delete = 0
+        GROUP BY DATE_FORMAT(gmt_create,'%Y-%m-%d') LIMIT 1
+    </select>
+
+    <select id="countBookingByCreateDate" resultType="com.ncst.cack.dto.StatisticsWeeklyDTO">
+        SELECT date_format(gmt_create, '%Y-%m-%d') AS date, COUNT(*) AS total
+        FROM booking WHERE DATE_FORMAT(gmt_create,'%Y-%m-%d') = #{currentDate} AND is_delete = 0
+        GROUP BY DATE_FORMAT(gmt_create,'%Y-%m-%d') LIMIT 1
+
+    </select>
+
+    <select id="countUserByCreateMonth" resultType="com.ncst.cack.dto.StatisticsWeeklyDTO">
+        SELECT DATE_FORMAT(gmt_create,'%Y-%m') AS date, COUNT(*) AS total
+        FROM user
+        WHERE DATE_FORMAT(gmt_create,'%Y-%m') = #{month}
+        GROUP BY DATE_FORMAT(gmt_create,'%Y-%m') LIMIT 1
+    </select>
+
+    <select id="countBookingByCreateMonth" resultType="com.ncst.cack.dto.StatisticsWeeklyDTO">
+        SELECT DATE_FORMAT(gmt_create,'%Y-%m') AS date, COUNT(*) AS total
+        FROM booking
+        WHERE DATE_FORMAT(gmt_create,'%Y-%m') = #{month}
+        GROUP BY DATE_FORMAT(gmt_create,'%Y-%m') LIMIT 1
+    </select>
+
+    <select id="countGender" resultType="com.ncst.cack.dto.StatisticsGenderDTO">
+        SELECT gender as type, count(*) AS total FROM user GROUP BY gender
+    </select>
+
+    <select id="countVehicleType" resultType="com.ncst.cack.dto.StatisticsVehicleTypeDTO">
+        SELECT vehicle_type, COUNT(*) AS total from vehicle GROUP BY vehicle_type
+    </select>
+</mapper>

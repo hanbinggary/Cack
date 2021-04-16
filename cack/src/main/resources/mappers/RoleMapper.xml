@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.RoleDao">
+    <resultMap id="roleMap" type="com.ncst.cack.dto.RoleDTO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="desc" property="desc" />
+        <result column="status" property="status" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <select id="listRole" resultMap="roleMap">
+        select id, name, `desc`, status, gmt_modified from role where is_delete = 0
+    </select>
+
+    <update id="updateDescById">
+        update role set `desc` = #{desc} where id = #{id}
+    </update>
+</mapper>

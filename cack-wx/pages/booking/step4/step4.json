@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "van-toast": "@vant/weapp/toast/index"
+  },
+  "navigationBarTitleText": "选择优惠券"
+}

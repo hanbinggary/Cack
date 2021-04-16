@@ -1,0 +1,50 @@
+<view class="container">
+  <view class="header">
+    <view class="vehicle-license">
+      <view class="vehicle-license-num">{{ vehicle.plateNo }}</view>
+      <!-- <view class="vehicle-license-type">{{ vehicle.licensePlateType }}</view> -->
+    </view>
+  </view>
+  <view class="vehicle-detail">
+    <view class="vehicle-detail-item">
+      <view class="vehicle-detail-label">总里程数</view>
+      <view class="vehicle-detail-desc">{{ vehicle.odometer }} km</view>
+    </view>
+
+    <view class="vehicle-detail-item" wx:if="{{ vehicle.useCharacter }}">
+      <view class="vehicle-detail-label">使用性质</view>
+      <view class="vehicle-detail-desc">{{ vehicle.useCharacter }}</view>
+    </view>
+    <view class="vehicle-detail-item" wx:if="{{ vehicle.vehicleType }}">
+      <view class="vehicle-detail-label">车辆类型</view>
+      <view class="vehicle-detail-desc">{{ vehicle.vehicleType }}</view>
+    </view>
+    <view class="vehicle-detail-item">
+      <view class="vehicle-detail-label">发动机号码</view>
+      <view class="vehicle-detail-desc">{{ vehicle.engineNo }}</view>
+    </view>
+    <view class="vehicle-detail-item">
+      <view class="vehicle-detail-label">车辆识别代码</view>
+      <view class="vehicle-detail-desc">{{ vehicle.vin }}</view>
+    </view>
+    <view class="vehicle-detail-item">
+      <view class="vehicle-detail-label">车辆注册日期</view>
+      <view class="vehicle-detail-desc">{{ vehicle.registerDate }}</view>
+    </view>
+    <view class="vehicle-detail-item">
+      <view class="vehicle-detail-label">登记时间</view>
+      <view class="vehicle-detail-desc">{{ vehicle.gmtCreate }}</view>
+    </view>
+    <view class="vehicle-detail-item">
+      <view class="vehicle-detail-label">更新时间</view>
+      <view class="vehicle-detail-desc">{{ vehicle.gmtModified }}</view>
+    </view>
+  </view>
+  <view class="operation">
+    <text class="operation-edit-text" bindtap="onEdit">编辑</text>
+    <text class="operation-delete-text" bindtap="onDelete">删除</text>
+  </view>
+  <van-dialog id="van-dialog" />
+  <!-- 删除 失败提示 -->
+  <van-toast id="vant-toast" />
+</view>

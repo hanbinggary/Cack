@@ -1,0 +1,38 @@
+<view class="container">
+  <view class="add" bindtap="onAdd">
+    <image src="../../images/add.png" class="add-icon"></image>
+    <view class="add-text">添加车辆</view>
+  </view>
+  <van-skeleton title row="6" loading="{{ loading }}">
+    <view class="vehicle-detail" wx:for="{{ vehicles }}" wx:for-item="vehicle" wx:key="id" data-id="{{ vehicle.id }}"
+      bindtap="onViewDetail">
+      <view class="vehicle-license">
+        <view class="vehicle-license-num">{{ vehicle.plateNo }}</view>
+        <view class="vehicle-type">{{ vehicle.vehicleType }}</view>
+      </view>
+      <view class="vehicle-content">
+        <view class="vehicle-item">
+          <view class="vehicle-item-label">发动机码</view>
+          <view class="vehicle-item-desc">{{ vehicle.engineNo }}</view>
+        </view>
+        <view class="vehicle-item">
+          <view class="vehicle-item-label">识别代码</view>
+          <view class="vehicle-item-desc">{{ vehicle.vin }}</view>
+        </view>
+        <view class="vehicle-item">
+          <view class="vehicle-item-label">车辆注册日期</view>
+          <view class="vehicle-item-desc">{{ vehicle.registerDate }}</view>
+        </view>
+        <view class="view-details">
+          <text class="view-details-text">详情</text>
+          <image src="../../images/chevron-right.svg" class="view-details-icon"></image>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{ vehicles.length === 0 }}" class="empty">
+      <image src="../../images/car.png" class="empty-icon"></image>
+      <view class="empty-text">暂无登记车辆</view>
+    </view>
+  </van-skeleton>
+  <van-divider contentPosition="center" wx:if="{{ vehicles.length > 0 }}">到底了</van-divider>
+</view>

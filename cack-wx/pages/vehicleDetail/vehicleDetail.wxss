@@ -1,0 +1,65 @@
+.header {
+  display: flex;
+  justify-content: center;
+}
+
+.vehicle-license {
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+  background: #fff;
+}
+
+.vehicle-license-num {
+  padding: 8px 12px;
+  font-size: 40rpx;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #2cf199;
+  background: #cafde6;
+}
+
+.vehicle-detail {
+  width: 100%;
+  margin-top: 8px;
+  padding: 16px 24px;
+  background: #fff;
+  font-size: 28rpx;
+}
+
+.vehicle-detail-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.vehicle-detail-label {
+  width: 110px;
+  color: #767676;
+  text-align: left;
+}
+
+.vehicle-detail-desc {
+  margin-left: 12px;
+}
+
+.expire-color {
+  color: red;
+}
+
+.operation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding: 8px 24px;
+  background: #fff;
+}
+
+.operation-edit-text {
+  color: #1890ff;
+}
+
+.operation-delete-text {
+  color: #f00;
+}

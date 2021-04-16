@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wx.cack.dao.CouponDao">
+
+    <resultMap id="unusedCouponMap" type="com.wx.cack.dto.CouponUnusedDTO">
+        <id column="id" property="id" />
+        <result column="is_used" property="used" />
+        <result column="money" property="money" />
+        <result column="expired_time" property="expiredTime" />
+    </resultMap>
+
+    <select id="queryUnusedCouponByUserId" parameterType="Long" resultMap="unusedCouponMap">
+        SELECT t1.id, t1.is_used, t2.money, t2.expired_time
+        FROM user_coupon AS t1
+        LEFT JOIN coupon  AS t2
+            ON t1.coupon_id = t2.id
+        WHERE t1.user_id = #{userId} AND t1.is_delete = 0 AND t1.is_used = 0
+          AND t2.is_expired = 0 AND t2.status = 1
+    </select>
+
+    <select id="countUsableCouponByUserId" parameterType="Long" resultType="int">
+        SELECT COUNT(*) AS total
+        FROM user_coupon AS t1
+                 LEFT JOIN coupon AS t2 ON t1.coupon_id = t2.id
+        WHERE t1.user_id = #{userId} AND t1.is_delete = 0 AND t1.is_used = 0
+          AND t2.is_expired = 0 AND t2.status = 1
+    </select>
+</mapper>

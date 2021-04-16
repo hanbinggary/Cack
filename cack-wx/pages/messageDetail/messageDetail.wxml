@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="notify-wrapper">
+    <view class="notify-header">
+      <text>标题：</text>
+      <text class="notify-title">{{ notify.title }}</text>
+    </view>
+    <view class="notify-content">{{ notify.content }}</view>
+    <view class="notify-other">
+      <view class="notify-other-text">创建日期: {{ notify.gmtCreate }}</view>
+      <view class="notify-other-text">读取时间: {{ notify.readedTime }}</view>
+    </view>
+  </view>
+</view>

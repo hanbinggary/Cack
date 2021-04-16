@@ -1,0 +1,62 @@
+.container {
+  padding: 12px;
+}
+
+.station-info {
+  padding-bottom: 12px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.station-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.station-header-content {
+  padding: 12px;
+}
+
+.station-name {
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.station-addr {
+  font-size: 26rpx;
+  color: #8F9BB3;
+}
+
+.station-location-icon {
+  width: 46rpx;
+  height: 46rpx;
+  padding: 6px 16px;
+  border-left: 1px solid #eee;
+}
+
+.station-content {
+  padding: 6px 16px;
+  font-size: 26rpx;
+}
+
+.station-content-title {
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.station-content-item {
+  padding-top: 12px;
+  /* color: #8F9BB3; */
+}
+
+.station-phone {
+  display: flex;
+  align-items: center;
+}
+
+.station-content-phone-icon {
+  width: 32rpx;
+  height: 32rpx;
+  padding: 0 8px;
+}

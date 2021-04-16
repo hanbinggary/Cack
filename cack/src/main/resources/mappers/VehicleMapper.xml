@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.VehicleDao">
+    <resultMap id="vehicleMap" type="com.ncst.cack.dto.VehicleDTO">
+        <id column="id" property="id" />
+        <result column="plate_no" property="plateNo" />
+        <result column="vehicle_type" property="vehicleType" />
+        <result column="use_character" property="useCharacter" />
+        <result column="vin" property="vin" />
+        <result column="engine_no" property="engineNo" />
+        <result column="odometer" property="odometer" />
+        <result column="register_date" property="registerDate" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="user_id" property="userId" />
+        <result column="nickname" property="nickname" />
+        <result column="tel" property="tel" />
+    </resultMap>
+
+    <select id="listVehicle" resultMap="vehicleMap">
+        SELECT t1.id, t1.plate_no, t1.vehicle_type, t1.use_character, t1.vin, t1.engine_no,
+               t1.odometer, t1.register_date, t1.gmt_create, t1.gmt_modified,
+               t2.id AS user_id, t2.nickname, t2.tel
+        FROM vehicle AS t1
+                 LEFT JOIN user AS t2 ON t1.user_id = t2.id
+        WHERE t1.is_delete = 0
+        <if test="searchValue != null">
+            and (
+                t1.plate_no like CONCAT('%', #{searchValue}, '%') or
+                t2.nickname like CONCAT(#{searchValue}, '%')
+            )
+        </if>
+    </select>
+
+    <select id="one" parameterType="Long" resultMap="vehicleMap">
+    SELECT t1.id, t1.plate_no, t1.vehicle_type, t1.use_character, t1.vin, t1.engine_no,
+        t1.odometer, t1.register_date, t1.gmt_create, t1.gmt_modified,
+        t2.id AS user_id, t2.nickname, t2.tel
+    FROM vehicle AS t1
+        LEFT JOIN user AS t2 ON t1.user_id = t2.id
+    WHERE t1.id = #{id} LIMIT 1
+    </select>
+</mapper>

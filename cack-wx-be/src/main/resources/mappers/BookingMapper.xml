@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wx.cack.dao.BookingDao">
+    <resultMap id="bookingSimpleMap" type="com.wx.cack.dto.BookingSimpleDTO">
+        <id column="id" property="id" />
+        <result column="order_no" property="orderNo" />
+        <result column="status" property="status" />
+        <result column="gmt_create" property="gmtCreate" />
+        <association property="vehicle" javaType="com.wx.cack.dto.VehicleDTO">
+            <id column="vid" property="id" />
+            <result column="plate_no" property="plateNo" />
+            <result column="vehicle_type" property="vehicleType" />
+            <result column="use_character" property="useCharacter" />
+            <result column="vin" property="vin" />
+            <result column="engine_no" property="engineNo" />
+            <result column="odometer" property="odometer" />
+            <result column="register_date" property="registerDate" />
+        </association>
+    </resultMap>
+
+    <resultMap id="bookingMap" type="com.wx.cack.dto.BookingDTO">
+        <id column="id" property="id" />
+        <result column="order_no" property="orderNo" />
+        <result column="status" property="status" />
+        <result column="cancel_reason" property="cancelReason" />
+        <result column="start_check_time" property="startCheckTime" />
+        <result column="end_check_time" property="endCheckTime" />
+        <result column="gmt_create" property="gmtCreate" />
+        <association property="vehicle" javaType="com.wx.cack.dto.VehicleDTO">
+            <id column="vid" property="id" />
+            <result column="plate_no" property="plateNo" />
+            <result column="vehicle_type" property="vehicleType" />
+            <result column="use_character" property="useCharacter" />
+            <result column="vin" property="vin" />
+            <result column="engine_no" property="engineNo" />
+            <result column="odometer" property="odometer" />
+            <result column="register_date" property="registerDate" />
+        </association>
+        <association property="bookingTime" javaType="com.wx.cack.dto.OrderBookingTimeDTO">
+            <id column="bid" property="id" />
+            <result column="date" property="date" />
+            <result column="start_time" property="startTime" />
+            <result column="end_time" property="endTime" />
+            <result column="bstatus" property="status" />
+            <result column="total" property="total" />
+            <result column="invalid_reason" property="invalidReason" />
+        </association>
+        <association property="coupon" javaType="com.wx.cack.dto.UserCouponDTO">
+            <id column="cid" property="id" />
+            <result column="is_used" property="used" />
+            <result column="money" property="money" />
+            <result column="expired" property="expired" />
+            <result column="cstatus" property="status" />
+        </association>
+    </resultMap>
+
+    <select id="queryReadyCheckBookingByUserId" parameterType="Long" resultType="com.wx.cack.dto.ReadyCheckDTO">
+        SELECT t1.id, t1.order_no, t1.`status`, t2.plate_no, t2.vehicle_type, t2.use_character,
+               t2.engine_no,t2.vin,t2.register_date, t2.odometer
+        FROM booking AS t1
+                 LEFT JOIN vehicle AS t2 ON t1.vehicle_id = t2.id
+        WHERE t1.user_id = #{userId} AND t1.`status` IN (1, 2)
+        order by t1.gmt_modified desc
+    </select>
+
+    <select id="queryBookingSimpleByUserId" parameterType="Long" resultMap="bookingSimpleMap">
+        SELECT t1.id, t1.order_no, t1.`status`, t1.gmt_create,
+               t2.id AS vid, t2.plate_no, t2.vehicle_type, t2.use_character,
+               t2.vin, t2.odometer, t2.register_date, t2.engine_no
+        FROM booking AS t1
+                 LEFT JOIN vehicle AS t2 ON t1.vehicle_id = t2.id
+        where t1.user_id = #{userId} AND t1.is_delete = 0
+        <if test="status != -1">AND t1.status = #{status}</if>
+        order by t1.gmt_modified desc
+    </select>
+
+    <select id="one" parameterType="Long" resultMap="bookingMap">
+        SELECT t1.id, t1.order_no, t1.`status`, t1.cancel_reason, t1.start_check_time,
+               t1.end_check_time, t1.gmt_create, t1.gmt_modified,
+               t3.id AS bid, t3.date, t3.start_time, t3.end_time, t3.`status` AS bstatus,
+               t3.invalid_reason, t4.id AS vid, t4.plate_no, t4.vehicle_type, t4.use_character,
+               t4.vin, t4.engine_no, t4.odometer, t4.register_date, t5.id AS cid, t5.is_used, t5.money,
+               t5.`status` AS cstatus, t5.is_expired
+        FROM booking AS t1
+         LEFT JOIN booking_time AS t3 ON t1.booking_time_id = t3.id
+         LEFT JOIN vehicle AS t4 ON t1.vehicle_id = t4.id
+         LEFT JOIN (SELECT uc.id, uc.is_used, c.money, c.`status`, c.is_expired FROM user_coupon AS uc
+            LEFT JOIN coupon AS c ON uc.coupon_id = c.id WHERE uc.is_delete = 0) AS t5
+            ON t1.user_coupon_id = t5.id
+        where t1.id = #{id} and t1.is_delete = 0
+    </select>
+
+    <select id="queryBookingTimeIdById" parameterType="Long" resultType="Long">
+        SELECT booking_time_id FROM booking
+        WHERE id = #{id} and status = 1 LIMIT 1
+    </select>
+
+    <select id="queryBookingIdByVehicleId" parameterType="Long" resultType="Long">
+        SELECT id FROM booking
+        WHERE vehicle_id = #{vehicleId} and status = 1 LIMIT 1
+    </select>
+
+    <select id="countStatusByUserId" resultType="int">
+        SELECT COUNT(*) AS total
+        FROM booking WHERE user_id = #{userId} AND status = #{status} AND is_delete = 0
+    </select>
+
+    <insert id="createBooking" parameterType="Booking" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into booking
+        (order_no, user_coupon_id, booking_time_id, vehicle_id, user_id)
+        values
+        (#{orderNo}, #{couponId, javaType=Long}, #{timeId}, #{vehicleId}, #{userId})
+    </insert>
+
+    <update id="cancelBookingByUserIdAndId">
+        update booking set status = 4 where id = #{id} and user_id = #{userId}
+    </update>
+
+    <update id="updateCancelReasonOfDeleteVehicleByVehicleId">
+        update booking set status = 0, cancel_reason = #{cancelReason}
+        where vehicle_id = #{vehicleId} and status in (1, 2)
+    </update>
+</mapper>

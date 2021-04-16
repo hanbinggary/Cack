@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="vehicle-wrap">
+    <view class="vehicle-title">选择要车检的车辆？</view>
+    <view class="vehicle-list">
+      <view class="vehicle-item {{ vehicle.selected ? 'vehicle-item-selected' : ''}}" wx:for="{{ vehicles }}"
+        wx:key="id" wx:for-item="vehicle" bindtap="onSelected" data-id="{{ vehicle.id }}">
+        <view class="vehicle-item-title">
+          <text class="vehicle-item-plateno">{{ vehicle.plateNo}}</text>
+          <text class="vehicle-item-type">{{ vehicle.vehicleType }}</text>
+        </view>
+        <view class="vehicle-item-other">
+          <view class="vehicle-item-other-text">注册日期: {{ vehicle.registerDate }}</view>
+          <view class="vehicle-item-other-text">车辆识别代码: {{ vehicle.vin }}</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty-list" wx:if="{{ vehicles.length === 0 }}">暂无可预约的车辆</view>
+    <!-- 按钮组 -->
+    <view class="btn-group">
+      <view class="btn cancal-btn" bindtap="onCancel">取消</view>
+      <view wx:if="{{ vehicles.length !== 0}}" class="btn next-btn" bindtap="onNext">下一步</view>
+    </view>
+  </view>
+</view>

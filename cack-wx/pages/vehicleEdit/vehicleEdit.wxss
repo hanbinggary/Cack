@@ -1,0 +1,40 @@
+.odometer {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  line-height: 24px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.odometer-label {
+  max-width: 6.2em;
+  min-width: 6.2em;
+  margin-right: 12px;
+  color: #646566;
+}
+
+.odometer-unit {
+  margin-left: 8px;
+  font-size: 32rpx;
+}
+
+.tips {
+  padding: 16px;
+  font-size: 26rpx;
+  color: #767676;
+}
+
+.add-btn {
+  margin: 24px;
+  padding: 8px;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  background: #1890ff;
+  box-shadow: 0 1px 8px rgba(24, 143, 255, 0.8);
+}
+
+.add-btn:active {
+  background-color: #1890ffcc;
+}

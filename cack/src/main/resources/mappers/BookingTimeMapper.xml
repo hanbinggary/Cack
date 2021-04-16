@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.BookingTimeDao">
+    <resultMap id="bookingTimeMap" type="com.ncst.cack.dto.BookingTimeDTO">
+        <id column="id" property="id" />
+        <result column="date" property="date" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="status" property="status" />
+        <result column="total" property="total" />
+        <result column="invalid_reason" property="invalidReason" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <select id="listBookingTime" parameterType="com.ncst.cack.qo.BookingTimeQO" resultMap="bookingTimeMap">
+        SELECT id, date, start_time, end_time, status, total, invalid_reason,
+               gmt_create, gmt_modified
+        FROM booking_time
+        <where>
+            is_delete = 0
+            <if test="date != null">and date = #{date}</if>
+            <if test="statusSign == 0">and status = false</if>
+            <if test="statusSign == 1">and status = true</if>
+        </where>
+        <if test="orderByTotal == 1">order by total asc </if>
+        <if test="orderByTotal == 2">order by total desc </if>
+    </select>
+
+    <select id="one" parameterType="Long" resultMap="bookingTimeMap">
+        SELECT id, date, start_time, end_time, status, total, invalid_reason,
+            gmt_create, gmt_modified
+        FROM booking_time
+        where id = #{id} LIMIT 1
+    </select>
+
+    <select id="countByDateAndTime" resultType="int">
+        SELECT COUNT(*) AS total FROM booking_time
+        WHERE date = #{date} and start_time = #{startTime}
+    </select>
+
+    <insert id="insertBatch" parameterType="List" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into booking_time (date, start_time, end_time) values
+        <foreach collection="bookingTimes" item="bookingTime" separator=",">
+            (#{bookingTime.date},#{bookingTime.startTime},#{bookingTime.endTime})
+        </foreach>
+    </insert>
+
+    <update id="updateCountAddOneById">
+        update booking_time set total += 1 where id = #{id}
+    </update>
+
+    <update id="updateStatusById">
+        update booking_time set status = #{status}, invalid_reason = #{invalidReason}
+            <if test="status == 0">, total = 0</if>
+        where id = #{id}
+    </update>
+
+    <update id="delete">
+        update booking_time set is_delete = 1, invalid_reason = #{invalidReason}, total = 0
+        where id = #{id}
+    </update>
+
+    <update id="deleteBatch" parameterType="List">
+        update booking_time set is_delete = 1, total = 0, invalid_reason = #{invalidReason}
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="queryIdsByDate" resultType="Long">
+        select id from  booking_time where date <![CDATA[<]]> #{now}
+    </select>
+
+    <update id="updateExpiredDateStatus">
+        update booking_time set status = 0, invalid_reason = '过期'
+        where status <![CDATA[!=]]> 0 and date <![CDATA[<]]> #{now}
+    </update>
+</mapper>

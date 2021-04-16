@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wx.cack.dao.BookingTimeDao">
+
+    <resultMap id="dateMap" type="BookingTimeDate">
+        <result column="date" property="date" />
+        <result column="time_count" property="timeCount" />
+        <result column="totals" property="totals" />
+    </resultMap>
+
+    <resultMap id="timeMap" type="com.wx.cack.dto.BookingTimeDTO">
+        <id column="id" property="id" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="total" property="total" />
+    </resultMap>
+
+    <select id="queryTodayDateTotal" resultMap="dateMap">
+        SELECT date, COUNT(*) AS time_count, SUM(total) AS totals FROM booking_time
+        WHERE  `status` = 1 AND date = #{now} AND start_time = #{startTime}
+          AND total <![CDATA[<]]> #{maxTimeBookingTotal} AND is_delete = 0
+        GROUP BY date
+    </select>
+
+    <select id="queryDateTotal" resultMap="dateMap">
+        SELECT date, COUNT(*) AS time_count, SUM(total) AS totals FROM booking_time
+        WHERE  `status` = 1 AND date > #{now}
+            AND total <![CDATA[<]]> #{maxTimeBookingTotal} AND is_delete = 0
+        GROUP BY date
+    </select>
+
+    <select id="queryTimeByDateAndMaxBookingTotal" resultMap="timeMap">
+        SELECT id, start_time, end_time ,total
+        FROM booking_time
+        WHERE date = #{date} AND is_delete = 0
+            AND `status` = 1 AND total <![CDATA[<]]> #{maxTimeBookingTotal}
+    </select>
+
+    <select id="one" parameterType="Long" resultType="BookingTime">
+        SELECT id, date, start_time, end_time, `status`, total, invalid_reason
+        FROM booking_time WHERE id = #{id} AND is_delete = 0
+    </select>
+
+    <update id="addOneTotalById" parameterType="Long">
+        update booking_time set total = total + 1 where id = #{id}
+    </update>
+
+    <update id="subOneTotalById" parameterType="Long">
+        update booking_time set total = total - 1 where id = #{id}
+    </update>
+</mapper>

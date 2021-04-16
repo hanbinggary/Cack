@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.NotifyDao">
+    <resultMap id="notifyMap" type="com.ncst.cack.dto.NotifyDTO">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="type" property="type" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="aid" property="adminId" />
+        <result column="username" property="username" />
+        <result column="nickname" property="nickname" />
+    </resultMap>
+
+    <select id="listNotify" resultMap="notifyMap" parameterType="Long">
+        SELECT t1.id, t1.title, t1.content, t1.type, t1.gmt_create, t1.gmt_modified,
+               t2.id AS aid, t2.username, t2.nickname
+        FROM notify AS t1
+                 LEFT JOIN admin AS t2 ON t1.admin_id = t2.id
+        WHERE t1.is_delete = 0
+        <if test="orderByGmtCreate == 1">order by t1.gmt_create asc </if>
+        <if test="orderByGmtCreate == 2">order by t1.gmt_create desc </if>
+    </select>
+
+    <insert id="insert" parameterType="Notify" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into notify
+        (title, content, `type`, admin_id)
+        values
+        (#{title}, #{content}, #{type}, #{adminId})
+    </insert>
+
+    <update id="delete" parameterType="Long">
+        update notify set is_delete = 1 where id = #{id}
+    </update>
+</mapper>

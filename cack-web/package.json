@@ -1,0 +1,26 @@
+{
+  "name": "cack-web",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@antv/g2": "^4.1.13",
+    "ant-design-vue": "^2.1.2",
+    "axios": "^0.21.1",
+    "js-cookie": "^2.2.1",
+    "moment": "^2.29.1",
+    "nprogress": "^0.2.0",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.5",
+    "vuex": "^4.0.0",
+    "vuex-persistedstate": "^4.0.0-beta.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.2.1",
+    "@vue/compiler-sfc": "^3.0.5",
+    "vite": "^2.1.5"
+  }
+}

@@ -1,0 +1,49 @@
+<view class="container">
+  <view class="header">
+    <view class="user-info">
+      <image src="{{ userInfo.avatarUrl}}" class="user-avatar"></image>
+      <view class="user-nickname">{{ userInfo.nickName }}</view>
+    </view>
+    <view class="statistic">
+      <view class="statistic-item" data-path="coupon" bindtap="onGoPage">
+        <view class="statistic-item-total">{{ couponTotal }}</view>
+        <view class="statistic-item-label">优惠券</view>
+      </view>
+      <view class="statistic-item" data-path="vehicle" bindtap="onGoPage">
+        <view class="statistic-item-total">{{ vehicleTotal }}</view>
+        <view class="statistic-item-label">拥有车辆</view>
+      </view>
+    </view>
+  </view>
+  <view class="menu-list">
+    <view class="menu-item" data-path="order" bindtap="onGoPage">
+      <view class="menu-item-content">
+        <image src="../../images/order.svg" class="menu-item-icon"></image>
+        <text class="menu-item-label">我的订单</text>
+      </view>
+      <image src="../../images/chevron-right.svg" class="menu-item-right-arrow"></image>
+    </view>
+    <view class="menu-item" data-path="vehicle" bindtap="onGoPage">
+      <view class="menu-item-content">
+        <image src="../../images/truck.svg" class="menu-item-icon"></image>
+        <text class="menu-item-label">车辆登记</text>
+      </view>
+      <image src="../../images/chevron-right.svg" class="menu-item-right-arrow"></image>
+    </view>
+    <view class="menu-item" data-path="message" bindtap="onGoPage">
+      <view class="menu-item-content menu-has-badage">
+        <image src="../../images/message.svg" class="menu-item-icon message-icon"></image>
+        <text class="menu-item-label">消息通知</text>
+        <text class="notify-badage" wx:if="{{ notifyTotal > 0 }}">{{ notifyTotal }}</text>
+      </view>
+      <image src="../../images/chevron-right.svg" class="menu-item-right-arrow"></image>
+    </view>
+    <view class="menu-item" data-path="station" bindtap="onGoPage">
+      <view class="menu-item-content">
+        <image src="../../images/map.svg" class="menu-item-icon"></image>
+        <text class="menu-item-label">商家信息</text>
+      </view>
+      <image src="../../images/chevron-right.svg" class="menu-item-right-arrow"></image>
+    </view>
+  </view>
+</view>

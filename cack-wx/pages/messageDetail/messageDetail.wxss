@@ -1,0 +1,32 @@
+.container {
+  padding: 16px 0;
+}
+
+.notify-wrapper {
+  background: #fff;
+}
+
+.notify-header {
+  padding: 16px;
+  border-bottom: 1px solid rgb(243, 243, 243);
+}
+
+.notify-title {
+  font-weight: bold;
+}
+
+.notify-content {
+  padding: 24px;
+  font-size: 28rpx;
+  text-indent: 56rpx;
+}
+
+.notify-other {
+  padding: 16px;
+  border-top: 1px solid rgb(243, 243, 243);
+}
+
+.notify-other-text {
+  font-size: 26rpx;
+  color: #636363;
+}

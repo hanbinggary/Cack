@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="coupon-wrap">
+    <view class="coupon-title">选择优惠券</view>
+    <view class="coupons-list">
+      <view class="coupons-item" wx:for="{{ coupons }}" wx:key="id" wx:for-item="coupon" data-id="{{ coupon.id }}"
+        bindtap="onSelectedCoupon">
+        <view class="coupons-item-info">
+          <view class="coupons-item-money">
+            <text class="money-symbol">￥</text>
+            <text class="money-value">{{ coupon.money }}</text>
+          </view>
+          <view class="coupons-item-desc">
+            <view class="coupons-item-desc-title">无门槛</view>
+            <view class="coupons-item-desc-expired-time">有效期至 {{ coupon.expiredTime }}</view>
+          </view>
+        </view>
+        <view class="coupon-used" wx:if="{{ coupon.selected }}">使用</view>
+      </view>
+    </view>
+    <view class="empty-list" wx:if="{{ coupons.length === 0 }}">暂无可用的优惠券</view>
+    <!-- 按钮组 -->
+    <view class="btn-group">
+      <view class="btn cancal-btn" bindtap="onCancel">取消</view>
+      <view class="btn next-btn booking-btn" bindtap="onBooking">预约</view>
+    </view>
+  </view>
+  <!-- 预约提示 -->
+  <van-toast id="van-toast" />
+</view>

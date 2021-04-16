@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="station-info">
+    <view class="station-header">
+      <view class="station-header-content">
+        <view class="station-name">{{ station.name }}</view>
+        <view class="station-addr">{{ station.addr }}</view>
+      </view>
+      <image src="/images/map-pin.svg" class="station-location-icon" bindtap="onMap"></image>
+    </view>
+    <view class="station-content">
+      <view class="station-content-title">商家信息</view>
+      <view class="station-content-item station-phone">
+        <text>手机号：</text>
+        <text class="station-content-item-value">{{ station.phone }}</text>
+        <image src="/images/phone.svg" class="station-content-phone-icon" bindtap="onMakePhone"></image>
+      </view>
+      <view class="station-content-item">
+        <text>联系电话：</text>
+        <text class="station-content-item-value">{{ station.tel }}</text>
+      </view>
+      <view class="station-content-item">
+        <text>营业时间：</text>
+        <text class="station-content-item-value">{{ station.openingTime }}</text>
+      </view>
+    </view>
+  </view>
+</view>

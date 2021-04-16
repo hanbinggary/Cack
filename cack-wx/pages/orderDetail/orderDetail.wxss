@@ -1,0 +1,112 @@
+.header {
+  box-sizing: border-box;
+  height: 330rpx;
+  color: #fff;
+  padding: 56rpx 72rpx;
+  background: linear-gradient(to top right, #ec6547, #de484c);
+}
+
+.header-ready-bg {
+  background: linear-gradient(to top right, #5fa9fd, #0f8bff);
+}
+
+.header-complete-bg {
+  background: #1890ff;
+
+}
+
+.header-status {
+  margin-bottom: 3px;
+  font-size: 48rpx;
+}
+
+.cancel-reason {
+  font-size: 28rpx;
+}
+
+.vehicle-container {
+  position: absolute;
+  top: 210rpx;
+  left: 16px;
+  right: 16px;
+}
+
+.vehicle-wrapper {
+  width: 100%;
+}
+
+.vehicle-thumb {
+  padding: 22px 12px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.vehicle-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.vehicle-info-plate-no {
+  padding: 4px 12px;
+  background: #cafde6;
+  border: 1px solid #2cf199;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+.vehicle-info-text {
+  font-size: 26rpx;
+}
+
+.vehicle-booking-time {
+  margin-top: 8px;
+  font-size: 26rpx;
+}
+
+/* 车辆详细信息 */
+.vehicle-desc,
+.booking-desc {
+  margin-top: 16px;
+  padding: 16px 12px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.vehicle-desc-title {
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+
+.desc-item {
+  padding: 6px 0;
+  font-size: 28rpx;
+}
+
+.desc-item-label {
+  color: #767676;
+}
+
+/* 订单详细信息 */
+.coupon-money {
+  color: red;
+}
+
+/* 按钮 */
+.btn-group {
+  padding-bottom: 12px;
+}
+
+.cancel-booking-btn {
+  padding: 8px 32px;
+  border-radius: 20px;
+  color: #fff;
+  background: #1890ff;
+  box-shadow: 0 1px 8px rgba(24, 143, 255, 0.8);
+}
+
+.cancel-booking-btn:active {
+  background-color: #1890ffcc;
+}

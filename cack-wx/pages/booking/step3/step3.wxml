@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="time-wrap">
+    <view class="time-title">选择要车检的时间段？</view>
+    <view class="times-list">
+      <view class="times-item {{ item.selected ? 'selected' : '' }}" wx:for="{{ times }}" wx:key="id"
+        data-id="{{ item.id }}" bindtap="onSelectedTime">
+        <text class="times-item-text">{{ item.startTime}}:00~{{ item.endTime}}:00</text>
+        <text
+          class="times-item-degree-crowding {{ item.degreeOfCrowding === '推荐' ? 'recommend-color' : (item.degreeOfCrowding === '拥挤' ? 'crowding-color' : 'full-color') }}">{{ item.degreeOfCrowding}}</text>
+      </view>
+    </view>
+    <!-- 按钮组 -->
+    <view class="btn-group">
+      <view class="btn cancal-btn" bindtap="onCancel">取消</view>
+      <view class="btn next-btn" bindtap="onNext">下一步</view>
+    </view>
+  </view>
+</view>

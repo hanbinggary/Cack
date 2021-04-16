@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.StationDao">
+    <resultMap id="stationMap" type="com.ncst.cack.dto.StationDTO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="addr" property="addr" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="desc" property="desc" />
+        <result column="phone" property="phone" />
+        <result column="tel" property="tel" />
+        <result column="opening_time" property="openingTime" />
+        <result column="picture" property="picture" />
+        <result column="max_time_booking_total" property="maxTimeBookingTotal" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <select id="one" resultMap="stationMap">
+        SELECT id, `name`, addr, longitude, latitude, `desc`, phone,
+               tel, opening_time, picture, max_time_booking_total, gmt_modified
+        FROM station WHERE id = 1 LIMIT 1
+    </select>
+
+    <update id="update" parameterType="Station">
+        update station
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="addr != null">addr = #{addr},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="desc != null">`desc` = #{desc},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="tel != null">tel = #{tel},</if>
+            <if test="openingTime != null">opening_time = #{openingTime},</if>
+            <if test="maxTimeBookingTotal != null">max_time_booking_total = #{maxTimeBookingTotal}</if>
+        </set>
+        where id = 1
+    </update>
+
+</mapper>

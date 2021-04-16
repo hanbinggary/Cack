@@ -1,0 +1,6 @@
+<view class="container">
+  <image src="../../images/logo.png" class="logo"></image>
+  <view class="desc">Cack线上预约车检，更便捷、更快。</view>
+  <button class="login-btn" bindtap="onLogin">微信一键登录</button>
+  <van-toast id="van-toast" />
+</view>

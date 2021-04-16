@@ -1,0 +1,25 @@
+<van-tabs swipeable color="#ff0000" bind:click="onClickTabs">
+  <van-tab title="未读消息" name="unread">
+    <template is="notify" data="{{ notifys, emptyText: '暂无未读消息' }}"></template>
+  </van-tab>
+  <van-tab title="已读消息" name="readed">
+    <template is="notify" data="{{ notifys, emptyText: '暂无已读消息' }}"></template>
+  </van-tab>
+</van-tabs>
+
+<template name="notify">
+  <view class="notify-list">
+    <view class="notify-item" wx:for="{{ notifys }}" wx:key="id" wx:for-item="notify" data-id="{{ notify.id }}"
+      bindtap="onNotifyDetail">
+      <view class="notify-item-header">
+        <text class="notify-item-title">{{ notify.title }}</text>
+        <text class="notify-item-create-date">{{ notify.gmtCreate }}</text>
+      </view>
+      <view class="notify-item-content">{{ notify.content }}</view>
+    </view>
+  </view>
+  <view wx:if="{{ notifys.length === 0 }}" class="empty">
+    <image src="../../images/message-delicate.png" class="empty-icon"></image>
+    <view class="empty-text">{{ emptyText }}</view>
+  </view>
+</template>

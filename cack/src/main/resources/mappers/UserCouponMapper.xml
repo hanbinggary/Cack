@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.UserCouponDao">
+    
+    <insert id="insertBatch">
+        insert into user_coupon (user_id, coupon_id)
+        values
+        <foreach collection="userIds" item="userId" separator=",">
+            (#{userId}, #{couponId})
+        </foreach>
+    </insert>
+
+    <update id="deleteByCouponId" parameterType="Long">
+        update user_coupon set is_delete = 1 where coupon_id = #{couponId}
+    </update>
+</mapper>

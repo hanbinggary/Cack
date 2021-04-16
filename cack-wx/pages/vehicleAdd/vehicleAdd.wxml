@@ -1,0 +1,43 @@
+<view class="container">
+  <view class="form">
+    <van-field model:value="{{ plateNo }}" label="车牌号" maxlength="10" placeholder="车牌号，例如: 京A08921" border="{{ false }}"
+      required="{{ true }}" bind:change="onChangePlateNo" error-message="{{ plateNoErrorMsg }}" />
+    <view class="odometer">
+      <view class="odometer-label">总里程数</view>
+      <van-stepper value="{{ odometer }}" input-width="72px" bind:change="onChangeOdometer" min="0" max="999999"
+        integer="{{ true }}" />
+      <text class="odometer-unit">km</text>
+    </view>
+    <van-field model:value="{{ type }}" label="车辆类型" maxlength="10" placeholder="车辆类型" border="{{ false }}"
+      bind:click-input="onClickType" />
+    <van-field model:value="{{ useCharacter }}" label="使用性质" maxlength="10" placeholder="使用性质" border="{{ false }}"
+      bind:click-input="onClickUseCharacter" />
+    <van-field model:value="{{ engineNo }}" label="发动机代码" maxlength="15" placeholder="发动机代码" border="{{ false }}"
+      required="{{ true }}" error-message="{{ engineNoErrorMsg }}" bind:change="onChangeEngineNo" />
+    <van-field model:value="{{ vin }}" label="车辆识别代码" maxlength="17" placeholder="车辆识别代码" border="{{ false }}"
+      required="{{ true }}" error-message="{{ vinErrorMsg }}" bind:change="onChangeVin"/>
+    <van-field model:value="{{ registerDate }}" label="车辆注册日期" maxlength="10" placeholder="注册日期" border="{{ false }}"
+      bind:click-input="onClickRegisterDate" />
+  </view>
+  <!-- 提示 -->
+  <view class="tips">注: 填写的信息尽量与实际一致。</view>
+  <!-- 添加按钮 -->
+  <view class="add-btn" bindtap="onAddBtn">添加车辆</view>
+  <!-- 车辆类型动作面板 -->
+  <van-action-sheet show="{{ showType }}" actions="{{ vehicleTypes }}" cancel-text="取消" bind:cancel="onCancelType"
+    bind:close="onCancelType" bind:select="onSelectType" />
+
+  <!-- 使用性质动作面板 -->
+  <van-action-sheet show="{{ showUseCharacter }}" actions="{{ vehicleUseCharacters }}" cancel-text="取消"
+    bind:cancel="onCancelUseCharacter" bind:close="onCancelUseCharacter" bind:select="onSelectUseCharacter" />
+
+  <!-- 注册日期日历 -->
+  <van-popup show="{{ showRegisterDate }}" round position="bottom" custom-style="height: 50%"
+    bind:close="onCloseRegisterDate">
+    <van-datetime-picker type="date" value="{{ currentDate }}" min-date="{{ minDate }}" formatter="{{ formatter }}"
+      bind:confirm="onConfirmRegisterDate" bind:cancel="onCloseRegisterDate" />
+  </van-popup>
+
+  <!-- 添加车辆提示 -->
+  <van-toast id="van-toast" />
+</view>

@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/my/my",
+    "pages/login/login",
+    "pages/booking/booking",
+    "pages/booking/step2/step2",
+    "pages/booking/step3/step3",
+    "pages/booking/step4/step4",
+    "pages/coupon/coupon",
+    "pages/station/station",
+    "pages/order/order",
+    "pages/orderDetail/orderDetail",
+    "pages/vehicle/vehicle",
+    "pages/vehicleDetail/vehicleDetail",
+    "pages/vehicleAdd/vehicleAdd",
+    "pages/vehicleEdit/vehicleEdit",
+    "pages/message/message",
+    "pages/messageDetail/messageDetail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "车检预约系统",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#8F9BB3",
+    "selectedColor": "#EA584F",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "./images/home.png",
+        "selectedIconPath": "./images/home_fill.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "./images/my.png",
+        "selectedIconPath": "./images/my_fill.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,78 @@
+<view class="container">
+  <view class="position-wrap" bindtap="onLocation">
+    <view class="location">
+      <image src="../../images/location.png" class="location-icon" />
+      <text class="location-addr">{{ name }}</text>
+    </view>
+    <view class="distance" wx:if="{{distance !== -1}}">
+      距离 {{ distance }} km
+    </view>
+  </view>
+  <!-- 待车检或车检中的统计 -->
+  <view class="vehicle-status-list">
+    <view class="vehicle-status-item vehicle-status-ready">
+      <view class="vehicle-status-label">待车检</view>
+      <view class="vehicle-status-total">{{ readyCheckTotal }}</view>
+    </view>
+    <view class="vehicle-status-item vehicle-status-checking">
+      <view class="vehicle-status-label">车检中</view>
+      <view class="vehicle-status-total">{{ checkingTotal }}</view>
+    </view>
+  </view>
+  <!-- 预约按钮 -->
+  <view class="booking-btn" bindtap="onBooking">
+    <text class="booking-btn-text">预约车检</text>
+  </view>
+  <!-- 待车检或车检中的列表 -->
+  <view class="inspection-list">
+    <view class="inspection-item" wx:for="{{ readyCheckList }}" wx:key="id">
+      <view class="inspection-item-header">
+        <view class="inspection-item-order-no">订单号 {{ item.orderNo }}</view>
+        <view class="inspection-item-plate-no">{{ item.plateNo }}</view>
+      </view>
+      <view class="divider-container">
+        <view class="divider-wrapper">
+          <view class="divider-line"></view>
+        </view>
+      </view>
+      <view class="inspection-item-content">
+        <view class="inspection-item-info">
+          <view class="inspection-content-info-item">
+            <view class="inspection-content-info-label">车辆类型</view>
+            <view class="inspection-content-info-text">{{ item.vehicleType }}</view>
+          </view>
+          <view class="inspection-content-info-item">
+            <view class="inspection-content-info-label">发动机号码</view>
+            <view class="inspection-content-info-text">{{ item.engineNo }}</view>
+          </view>
+          <view class="inspection-content-info-item">
+            <view class="inspection-content-info-label">车辆注册日期</view>
+            <view class="inspection-content-info-text">{{ item.registerDate }}</view>
+          </view>
+        </view>
+        <view class="inspection-item-flow">
+          <view class="inspection-flow-item">
+            <view
+              class="inspection-flow-item-sign-detault flow-dot-bottom {{ item.status === 1 || item.status === 2 ? 'inspection-flow-item-sign-raedy' : '' }}">
+            </view>
+            <view
+              class="inspection-flow-item-text flow-dot-bottom flow-dot-top {{ item.status === 1 || item.status === 2 ? 'inspection-flow-item-text-active' : ''}}">
+              待车检</view>
+          </view>
+          <view class="inspection-flow-item">
+            <view
+              class="inspection-flow-item-sign-detault flow-dot-top flow-dot-bottom {{ item.status === 2 ? 'inspection-flow-item-sign-checking' : '' }}">
+            </view>
+            <view class="inspection-flow-item-text {{ item.status === 2 ? 'inspection-flow-item-text-active' : ''}}">车检中
+            </view>
+          </view>
+          <view class="inspection-flow-item">
+            <view class="inspection-flow-item-sign-detault flow-dot-top"></view>
+            <view class="inspection-flow-item-text">完成</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <van-toast id="van-toast" />
+</view>

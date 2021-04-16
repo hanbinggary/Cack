@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncst.cack.dao.UserNotifyDao">
+    <resultMap id="userNotifyMap" type="com.ncst.cack.dto.UserNotifyDTO">
+        <id column="id" property="id" />
+        <result column="is_readed" property="readed" />
+        <result column="readed_time" property="readedTime" />
+        <result column="u_id" property="userId" />
+        <result column="nickname" property="nickname" />
+    </resultMap>
+    <select id="listUserNotify" resultMap="userNotifyMap">
+
+        SELECT t1.id, t1.is_readed, t1.readed_time, t2.id AS u_id, t2.nickname
+        FROM user_notify AS t1
+        LEFT JOIN user AS t2 ON t1.user_id = t2.id
+        WHERE t1.is_delete = 0 and t1.notify_id = #{notifyId}
+    </select>
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into user_notify
+            (user_id, notify_id)
+            values
+            <foreach collection="userNotifies" item="userNotify" separator=",">
+                (#{userNotify.userId}, #{userNotify.notifyId})
+            </foreach>
+    </insert>
+
+    <update id="delete" parameterType="Long">
+        update user_notify set is_delete = 1 where notify_id = #{notifyId}
+    </update>
+</mapper>
